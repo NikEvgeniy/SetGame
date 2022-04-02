@@ -27,16 +27,37 @@ struct SetCardGameView: View {
 
 struct CardView: View {
     var card: SetGame<SetCard>.Card
+    var colorsBorder: [Color] = [.blue,.red,.yellow]
     
     var body: some View {
         if card.isSelected || !card.isMatched{
             SetCardView(card: card.content)
                 .background(Color.white)
                 .cornerRadius(cornerRadius)
+                .overlay(
+                RoundedRectangle(cornerRadius: cornerRadius)
+                    .stroke(highlightColor(), lineWidth: borderLineWidth))
         }
     }
-    // MARK: - Drawing Constants
+    // MARK: - Drawing Constants & Helper Functions
+    
     private let cornerRadius: CGFloat = 10.0
+    private let borderLineWidth: CGFloat = 7
+    
+    private func highlightColor() -> Color {
+        var color = Color.white.opacity(0)
+        if card.isSelected{
+            if card.isMatched{
+                color = colorsBorder [0]
+            } else if card.isNotMatched{
+                color = colorsBorder [1]
+            }else{
+                color = colorsBorder [2]
+
+            }
+        }
+        return color
+    }
 }
 
 
