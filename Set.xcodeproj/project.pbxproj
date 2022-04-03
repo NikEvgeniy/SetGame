@@ -19,6 +19,7 @@
 		97727DBE27C55CD0006337E1 /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97727DBD27C55CD0006337E1 /* Grid.swift */; };
 		97727DC027C56D79006337E1 /* SetCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97727DBF27C56D79006337E1 /* SetCard.swift */; };
 		97727DC227C58891006337E1 /* SetCardDeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97727DC127C58891006337E1 /* SetCardDeck.swift */; };
+		9785CF7F27F9F6DA007022FB /* Transiotion+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9785CF7E27F9F6DA007022FB /* Transiotion+Extensions.swift */; };
 		97A3C4D027D3838E00130717 /* StripedRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A3C4CF27D3838E00130717 /* StripedRect.swift */; };
 		97ACACC827DFA4DA00658BBA /* SetCardGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97ACACC727DFA4DA00658BBA /* SetCardGame.swift */; };
 		97FD961B27F87C5E00C4CE2A /* RainDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FD961A27F87C5E00C4CE2A /* RainDrop.swift */; };
@@ -39,6 +40,7 @@
 		97727DBD27C55CD0006337E1 /* Grid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
 		97727DBF27C56D79006337E1 /* SetCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCard.swift; sourceTree = "<group>"; };
 		97727DC127C58891006337E1 /* SetCardDeck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCardDeck.swift; sourceTree = "<group>"; };
+		9785CF7E27F9F6DA007022FB /* Transiotion+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Transiotion+Extensions.swift"; sourceTree = "<group>"; };
 		97A3C4CF27D3838E00130717 /* StripedRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripedRect.swift; sourceTree = "<group>"; };
 		97ACACC727DFA4DA00658BBA /* SetCardGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCardGame.swift; sourceTree = "<group>"; };
 		97E5E95527C41CB800A3E98C /* Set.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Set.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -123,6 +125,7 @@
 			children = (
 				971E70E127D639A5003480C8 /* SetCardView.swift */,
 				97727DB227C559C3006337E1 /* SetCardGameView.swift */,
+				9785CF7E27F9F6DA007022FB /* Transiotion+Extensions.swift */,
 				975B14A727C5911C00FF79D6 /* Shape */,
 			);
 			path = View;
@@ -236,6 +239,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				975B14A627C5910A00FF79D6 /* Rhombus.swift in Sources */,
+				9785CF7F27F9F6DA007022FB /* Transiotion+Extensions.swift in Sources */,
 				971E70E227D639A5003480C8 /* SetCardView.swift in Sources */,
 				97A3C4D027D3838E00130717 /* StripedRect.swift in Sources */,
 				97727DBC27C559C3006337E1 /* SetGameApp.swift in Sources */,
