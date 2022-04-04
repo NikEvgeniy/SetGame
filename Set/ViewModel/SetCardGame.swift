@@ -49,6 +49,11 @@ class SetCardGame: ObservableObject{
     var cards: Array<SetGame<SetCard>.Card> {
         model.cards
     }
+    
+    var cardsInDeck: Int{
+        model.deck.count
+    }
+    
     //Mark: - Intent(s)
     func choose(card: SetGame<SetCard>.Card){
         model.choose(card: card)
@@ -56,6 +61,14 @@ class SetCardGame: ObservableObject{
     
     func deal(){
         model.deal()
+    }
+    
+    func resetGame() {
+        model = SetCardGame.createSetGame()
+    }
+    
+    func deal3(){
+        model.deal(3)
     }
 }
 

@@ -12,17 +12,24 @@ struct SetCardGameView: View {
     @State var shouldDelay = true
     
     var body: some View{
-        GeometryReader { geometry in
-            Grid(viewModel.cards) { card in
-                CardView (card: card)
-                    .transition(.cardTransition(size: geometry.size))
-                    .animation(Animation.easeInOut(duration: 1.00)
-                        .delay(transitionDelay(card: card)))
-                    .onTapGesture {viewModel.choose(card: card)}.padding(2)
-            }   .onAppear{deal()}
-                .padding(2)
-                .background(tableColor.edgesIgnoringSafeArea(.all))
-        }
+        VStack{
+            GeometryReader { geometry in
+                Grid(viewModel.cards) { card in
+                    CardView (card: card)
+                        .transition(.cardTransition(size: geometry.size))
+                        .animation(Animation.easeInOut(duration: 1.00)
+                            .delay(transitionDelay(card: card)))
+                        .onTapGesture {viewModel.choose(card: card)}.padding(2)
+                }
+            }
+            .onAppear{deal()}
+            HStack(spacing:50){
+                Text("Deck: \(viewModel.cardsInDeck)")
+                Button ("Deal+3"){ deal3()}
+                Button("New Game"){newGame()}
+            }.foregroundColor(Color.white).font(.headline)
+        }.padding(2)
+            .background(tableColor.edgesIgnoringSafeArea(.all))
     }
     
     // MARK: - Drawing Constants
@@ -42,6 +49,18 @@ struct SetCardGameView: View {
         DispatchQueue.main.async {
             shouldDelay = false
         }
+    }
+    private func deal3(){
+        shouldDelay = true
+        viewModel.deal3()
+        DispatchQueue.main.async{
+            shouldDelay = false
+        }
+    }
+    private func newGame(){
+        viewModel.resetGame()
+        shouldDelay = true
+        deal()
     }
 }
 
