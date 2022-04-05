@@ -13,16 +13,8 @@ struct SetCardGameView: View {
     
     var body: some View{
         VStack{
-            GeometryReader { geometry in
-                Grid(viewModel.cards) { card in
-                    CardView (card: card)
-                        .transition(.cardTransition(size: geometry.size))
-                        .animation(Animation.easeInOut(duration: 1.00)
-                            .delay(transitionDelay(card: card)))
-                        .onTapGesture {viewModel.choose(card: card)}.padding(2)
-                }
-            }
-            .onAppear{deal()}
+            GameView()
+                .onAppear{deal()}
             HStack(spacing:50){
                 Text("Deck: \(viewModel.cardsInDeck)")
                 Button ("Deal+3"){ deal3()}
@@ -36,13 +28,6 @@ struct SetCardGameView: View {
     
     private var tableColor: Color{
         Color(UIColor(red: 0, green: 0.5, blue: 0, alpha: 1))}
-    
-    private let cardTransitionDelay : Double = 0.2
-    
-    private func transitionDelay(card: SetGame<SetCard>.Card) -> Double {
-        guard shouldDelay else { return 0 }
-        return Double(viewModel.cards.firstIndex(where: {$0.id == card.id} )!) * cardTransitionDelay
-    }
     
     private func deal(){
         viewModel.deal()
@@ -117,3 +102,29 @@ struct CardView: View {
 //        SetGameView().preferredColorScheme(.light)
 //    }
 //}
+
+struct GameView: View {
+    
+    @ObservedObject var viewModel: SetCardGame
+    @Binding var shouldDelay: Bool
+    
+    var body: some View {
+        GeometryReader { geometry in
+            Grid(viewModel.cards) { card in
+                CardView (card: card)
+                    .transition(.cardTransition(size: geometry.size))
+                    .animation(Animation.easeInOut(duration: 1.00)
+                        .delay(transitionDelay(card: card)))
+                    .onTapGesture {viewModel.choose(card: card)}.padding(2)
+            }
+        }
+    }
+    
+ // MARK: - Drawing Constants & Helper Functions
+    private let cardTransitionDelay : Double = 0.2
+    
+    private func transitionDelay(card: SetGame<SetCard>.Card) -> Double {
+        guard shouldDelay else { return 0 }
+        return Double(viewModel.cards.firstIndex(where: {$0.id == card.id} )!) * cardTransitionDelay
+    }
+}
