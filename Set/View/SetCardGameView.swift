@@ -13,7 +13,7 @@ struct SetCardGameView: View {
     
     var body: some View{
         VStack{
-            GameView()
+            GameView(viewModel: viewModel, shouldDelay: $shouldDelay)
                 .onAppear{deal()}
             HStack(spacing:50){
                 Text("Deck: \(viewModel.cardsInDeck)")
