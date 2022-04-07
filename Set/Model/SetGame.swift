@@ -70,10 +70,14 @@ struct SetGame <CardContent> where CardContent: Matchable {
                     changeCards()
                     onlySelectedCard(chosenIndex)
                 }
-                // -------------------------------------------------------------------
             }
+            // ------------------------  Deselect card  --------------------
+        } else if let chosenIndex = cards.firstIndex(where: { $0.id == card.id}),
+                  cards[chosenIndex].isSelected,
+                  !cards[chosenIndex].isMatched,
+                  !cards[chosenIndex].isNotMatched{
+            cards[chosenIndex].isSelected = false
         }
-        
     }
     
     var matchedIndeces: [Int] {

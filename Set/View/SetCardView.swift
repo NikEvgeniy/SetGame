@@ -10,6 +10,7 @@ import SwiftUI
 struct SetCardView: View {
     var card: SetCard
     var colorsShapes: [Color] = [.green,.red,.purple]
+    var setting: Setting
     
     var body: some View {
         GeometryReader {geo in
@@ -26,31 +27,41 @@ struct SetCardView: View {
     }
     
     @ViewBuilder private func cardShape() -> some View {
-        switch card.shape {
-        case .v1 :  shapeFill(shape: Rhombus())
-        case .v2 :  shapeFill(shape: Capsule())
-        case .v3 :  shapeFill(shape: Squiggle())
+        switch shapeInSet(card: card) {
+        case .rhombus :     shapeFill(shape: Rhombus())
+        case .oval :        shapeFill(shape: Capsule())
+        case .squiggle :    shapeFill(shape: Squiggle())
+        case .rainDrop :    shapeFill(shape: RainDrop())
         }
     }
     
     @ViewBuilder private func shapeFill<setShape>(shape: setShape)-> some View
     where setShape: Shape {
         ZStack{
-            switch card.fill {
-            case .v1: shape.stroke(lineWidth: lineWidth)
-            case .v2: shape.fillAndBorder(lineWidth)
-            case .v3: shape.stripe(lineWidth)
+            switch fillInSet(card: card) {
+            case .stroke:   shape.stroke(lineWidth: shapeLineWidth)
+            case .fill:     shape.fillAndBorder()
+            case .stripe:   shape.stripe()
+            case .blur:     shape.blur()
             }
         }
     }
     // MARK: - Drawing Constants
-    private let lineWidth: CGFloat = 3
+    private let shapeLineWidth: CGFloat = 3
+    
+    private func fillInSet(card: SetCard) -> FillInSet {
+        setting.fillShapes[card.fill.rawValue - 1 ]
+    }
+    
+    private func shapeInSet(card: SetCard) -> ShapesInSet{
+        setting.shapes[card.shape.rawValue - 1]
+    }
     
 }
 
 struct SetCardView_Previews: PreviewProvider {
     static var previews: some View {
-        SetCardView( card: SetCard (number:.v3, color: .v3, shape: .v3, fill: .v3))
+        SetCardView( card: SetCard (number:.v3, color: .v3, shape: .v3, fill: .v3), setting: Setting())
             .overlay(
                 RoundedRectangle( cornerRadius: 10)
                     .stroke(Color.blue, lineWidth: 2)

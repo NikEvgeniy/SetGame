@@ -13,10 +13,15 @@ struct SetCardGameView: View {
     
     var body: some View{
         VStack{
+            HStack{
+                Spacer()
+                Text("Deck: \(viewModel.cardsInDeck)")
+                    .foregroundColor(Color.white).font(.headline)
+                    .padding()
+            }
             GameView(viewModel: viewModel, shouldDelay: $shouldDelay)
                 .onAppear{deal()}
             HStack(spacing:50){
-                Text("Deck: \(viewModel.cardsInDeck)")
                 Button (viewModel.numberHint){ viewModel.hint()}.greenRoundStyle()
                 Button ("Deal+3"){ deal3()}.greenRoundStyle()
                     .disabled(viewModel.cardsInDeck == 0)
@@ -56,11 +61,12 @@ struct CardView: View {
     var card: SetGame<SetCard>.Card
     var colorsBorder: [Color] = [.blue,.red,.yellow]
     var colorHint: Color = Color(#colorLiteral(red: 31/255.0, green: 81/255.0, blue: 255/255.0, alpha: 1.0)) // sRGB
+    @Binding var setting: Setting
     
-        var body: some View {
+    var body: some View {
         if card.isSelected || !card.isMatched{
-            SetCardView(card: card.content)
-                .background(card.isHint ? colorHint :Color.white)
+            SetCardView(card: card.content, setting: setting)
+                .background(card.isHint ? setting.colorHint :Color.white)
                 .cornerRadius(cornerRadius)
                 .overlay(
                     RoundedRectangle(cornerRadius: cornerRadius)
@@ -76,11 +82,11 @@ struct CardView: View {
         var color = Color.white.opacity(0)
         if card.isSelected{
             if card.isMatched{
-                color = colorsBorder [0]
+                color = setting.colorsBorder [0]
             } else if card.isNotMatched{
-                color = colorsBorder [1]
+                color = setting.colorsBorder [1]
             }else{
-                color = colorsBorder [2]
+                color = setting.colorsBorder [2]
                 
             }
         }
@@ -115,7 +121,7 @@ struct GameView: View {
     var body: some View {
         GeometryReader { geometry in
             Grid(viewModel.cards) { card in
-                CardView (card: card)
+                CardView(card: card, setting: $viewModel.setting)
                     .transition(.cardTransition(size: geometry.size))
                     .animation(Animation.easeInOut(duration: 1.00)
                         .delay(transitionDelay(card: card)))
@@ -124,7 +130,7 @@ struct GameView: View {
         }
     }
     
- // MARK: - Drawing Constants & Helper Functions
+    // MARK: - Drawing Constants & Helper Functions
     private let cardTransitionDelay : Double = 0.2
     
     private func transitionDelay(card: SetGame<SetCard>.Card) -> Double {

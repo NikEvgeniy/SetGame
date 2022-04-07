@@ -14,7 +14,7 @@ enum FillInSet: Int, CaseIterable {
     case blur
 }
 enum ShapesInSet: Int, CaseIterable {
-    case diamond = 1
+    case rhombus = 1
     case oval
     case squiggle
     case rainDrop
@@ -28,8 +28,8 @@ struct Setting {
     // possible: .stroke, .fill, .stripe, blur
     var fillShapes = [FillInSet.stroke, .stripe, .fill]
     
-    // possible: .diamond, .oval, .squiggle, rainDrop
-    var shapes = [ShapesInSet.diamond, .oval, .squiggle]
+    // possible: .rhombus, .oval, .squiggle, rainDrop
+    var shapes = [ShapesInSet.rhombus, .oval, .squiggle]
 }
 
 class SetCardGame: ObservableObject{
@@ -43,6 +43,8 @@ class SetCardGame: ObservableObject{
     }
     static var numberOfCardsStart = 12
     static private var deck = SetCardDeck()
+    
+    var setting = Setting()
     
     // Mark: - Access to the Model
     
