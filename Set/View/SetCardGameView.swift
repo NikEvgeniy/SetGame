@@ -17,8 +17,11 @@ struct SetCardGameView: View {
                 .onAppear{deal()}
             HStack(spacing:50){
                 Text("Deck: \(viewModel.cardsInDeck)")
-                Button ("Deal+3"){ deal3()}
-                Button("New Game"){newGame()}
+                Button (viewModel.numberHint){ viewModel.hint()}.greenRoundStyle()
+                Button ("Deal+3"){ deal3()}.greenRoundStyle()
+                    .disabled(viewModel.cardsInDeck == 0)
+                    .foregroundColor(viewModel.cardsInDeck == 0 ? .gray : .white)
+                Button("New Game"){newGame()}.greenRoundStyle()
             }.foregroundColor(Color.white).font(.headline)
         }.padding(2)
             .background(tableColor.edgesIgnoringSafeArea(.all))
@@ -52,11 +55,12 @@ struct SetCardGameView: View {
 struct CardView: View {
     var card: SetGame<SetCard>.Card
     var colorsBorder: [Color] = [.blue,.red,.yellow]
+    var colorHint: Color = Color(#colorLiteral(red: 31/255.0, green: 81/255.0, blue: 255/255.0, alpha: 1.0)) // sRGB
     
-    var body: some View {
+        var body: some View {
         if card.isSelected || !card.isMatched{
             SetCardView(card: card.content)
-                .background(Color.white)
+                .background(card.isHint ? colorHint :Color.white)
                 .cornerRadius(cornerRadius)
                 .overlay(
                     RoundedRectangle(cornerRadius: cornerRadius)
