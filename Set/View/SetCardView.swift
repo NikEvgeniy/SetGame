@@ -16,7 +16,7 @@ struct SetCardView: View {
         GeometryReader {geo in
             VStack {
                 Spacer()
-                ForEach(0..<card.number.rawValue) { index in
+                ForEach(0..<card.number.rawValue, id: \.self) { index in
                     cardShape().frame(height: geo.size.height/4)
                 }
                 Spacer()
@@ -61,7 +61,7 @@ struct SetCardView: View {
 
 struct SetCardView_Previews: PreviewProvider {
     static var previews: some View {
-        SetCardView( card: SetCard (number:.v3, color: .v3, shape: .v3, fill: .v3), setting: Setting())
+        SetCardView( card: SetCard (number:.v3, color: .v1, shape: .v3, fill: .v2), setting: Setting())
             .overlay(
                 RoundedRectangle( cornerRadius: 10)
                     .stroke(Color.blue, lineWidth: 2)

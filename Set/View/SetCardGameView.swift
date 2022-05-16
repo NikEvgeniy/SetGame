@@ -13,23 +13,40 @@ struct SetCardGameView: View {
     
     var body: some View{
         VStack{
-            HStack{
-                Spacer()
-                Text("Deck: \(viewModel.cardsInDeck)")
-                    .foregroundColor(Color.white).font(.headline)
-                    .padding()
-            }
+            cardsLeft
+                .font(.headline)
+            gameBody
+                .padding(2)
+                .background(tableColor.edgesIgnoringSafeArea(.all))
+            HStack(spacing:50){
+                hint
+                dealMore
+                restart
+            }.font(.headline)
+        }
+    }
+    
+    var gameBody: some View {
             GameView(viewModel: viewModel, shouldDelay: $shouldDelay)
                 .onAppear{deal()}
-            HStack(spacing:50){
-                Button (viewModel.numberHint){ viewModel.hint()}.greenRoundStyle()
-                Button ("Deal+3"){ deal3()}.greenRoundStyle()
-                    .disabled(viewModel.cardsInDeck == 0)
-                    .foregroundColor(viewModel.cardsInDeck == 0 ? .gray : .white)
-                Button("New Game"){newGame()}.greenRoundStyle()
-            }.foregroundColor(Color.white).font(.headline)
-        }.padding(2)
-            .background(tableColor.edgesIgnoringSafeArea(.all))
+    }
+    
+    var cardsLeft: some View {
+        Text("Deck: \(viewModel.cardsInDeck)")
+    }
+    
+    var hint: some View {
+        Button (viewModel.numberHint){ viewModel.hint()}.greenRoundStyle()
+    }
+    
+    var dealMore: some View {
+        Button ("Deal+3"){ deal3()}.greenRoundStyle()
+            .disabled(viewModel.cardsInDeck == 0)
+            //.foregroundColor(viewModel.cardsInDeck == 0 ? .gray : .white)
+    }
+    
+    var restart: some View {
+        Button("New Game"){newGame()}.greenRoundStyle()
     }
     
     // MARK: - Drawing Constants
